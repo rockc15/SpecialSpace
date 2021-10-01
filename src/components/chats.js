@@ -1,9 +1,9 @@
-import React ,{useState} from 'react';
+import React, { useState } from 'react';
 import config from '../firebase-config';
 import { initializeApp } from 'firebase/app';
-import { getFirestore , collection, addDoc} from "firebase/firestore"
+import { getFirestore, collection, addDoc } from "firebase/firestore"
 
-export default class Chats extends React.Component{
+export default class Chats extends React.Component {
     constructor(props) {
         super(props);
         this.app = initializeApp(config)
@@ -14,22 +14,23 @@ export default class Chats extends React.Component{
 
         this.writePost = this.writePost.bind(this)
     }
-    
 
-    writePost = async (event) =>{
+
+    writePost = async (event) => {
         try {
             event.preventDefault();
-            const docRef = await addDoc(collection(this.db, "posts"), {
-                text: this.state.formValue ,
-            });
-            console.log("Document written with ID: ", docRef.id);
+            if (this.state.formValue != "") {
+                const docRef = await addDoc(collection(this.db, "posts"), {
+                    text: this.state.formValue,
+                });
+            }
         } catch (e) {
             console.error("Error adding document: ", e);
         }
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <form onSubmit={this.writePost}>
                 <input onChange={(e) => this.state.formValue = e.target.value} placeholder="say something nice" />
                 <button type="submit" >POST</button>
