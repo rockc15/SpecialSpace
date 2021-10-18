@@ -1,0 +1,26 @@
+#page {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100%100%;
+    /* text-align: center; */
+    background-image: url(../assets/Login.jpg)
+  }
+  
+  h1 {
+    color: #040e0d
+  }
+
+  .chat-div{
+      background-color: #040e0d;
+  }
+
+  .light {
+    background-color: #f5d06a
+  }

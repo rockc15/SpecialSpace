@@ -1,7 +1,6 @@
 import React from 'react';
 import '../css/login.css'
 import Form from 'react-bootstrap/Form';
-// import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -67,7 +66,7 @@ export default class Login extends React.Component {
                                         </Form.Group>
                                         <input type='submit' id='submit-btn' class='btn btn-dark w-50 mt-2' value='Login' />
                                     </Form>
-                                    <a class="btn btn-outline-primary w-50 m-2" href="/createNewAccount" id="create-new-account">Create New Account</a>
+                                    <a class="btn btn-outline-primary w-50 m-2" href="/createNewAccount" id="create-new-account">Create Account</a>
                                 </div>
                             </div>
                         </Col>

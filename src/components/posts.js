@@ -1,48 +1,61 @@
 import React from 'react';
 import config from '../firebase-config';
-import { getFirestore, collection, onSnapshot, query } from "firebase/firestore"; 
+import { getFirestore, collection, onSnapshot, query, doc, where } from "firebase/firestore";
 import { initializeApp } from 'firebase/app';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export default class Posts extends React.Component {
     constructor(props) {
         super(props);
+        this.groupName = props.group
         this.app = initializeApp(config)
         this.db = getFirestore();
+        this.auth = getAuth();
         this.state = { posts: [] };
     }
 
     componentDidMount = () => {
-        this.updatesPost()
-      }
-    
-    updatesPost = () =>{
-        try{
-            const q = query(collection(this.db, "posts"));
-            onSnapshot(q, (querySnapshot) => {
-              const queryPosts = [];
-              querySnapshot.forEach((doc) => {
-                queryPosts.push(doc.data())
-              }); 
-              this.setState({ posts: queryPosts  })
-            });
-        }catch(error){
-            console.log(error)
-        } 
+        onAuthStateChanged(this.auth, (user) => {
+            if (user) {
+                this.updatesPost()
+
+            }
+        })
+
     }
 
-    render(){
+    updatesPost = (groupName) => {
+        try {
+            const q = query(collection(this.db, "groups", this.groupName, "posts"));
+
+            onSnapshot(q, (snapshot) => {
+                let snap_post = []
+                snapshot.forEach((doc) => {
+                    snap_post.push(doc.data().text)
+                })
+                this.setState({
+                    posts: snap_post
+                })
+            });
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    render() {
         const requestsPosts = Object.values(this.state.posts).map(post => {
             return (
-              <li>
-                  {post.text}
-              </li>
+                <li>
+                    {post}
+                </li>
             )
         })
-        return(
+        return (
             <div className="messages">
                 {requestsPosts}
             </div>
-        ) 
+        )
     }
 
 }
